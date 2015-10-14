@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false"
+    monitoring="autodetect" dynamicConfig="true" name="OrderCache">
+    
+    <!-- Location of persistent caches on disk -->
+    <diskStore path="java.io.tmpdir" />
+    
+    <!-- Default Cache for 10 mins -->
+	<defaultCache eternal="false"
+		timeToIdleSeconds="600" timeToLiveSeconds="600" overflowToDisk="false"
+		diskPersistent="false" memoryStoreEvictionPolicy="LRU" />
+	
+	<!-- Cache for 60 mins -->
+	<cache name="booksBySubject"
+		eternal="false" timeToIdleSeconds="900" timeToLiveSeconds="84600"
+		overflowToDisk="false" diskPersistent="false"
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+</ehcache>
