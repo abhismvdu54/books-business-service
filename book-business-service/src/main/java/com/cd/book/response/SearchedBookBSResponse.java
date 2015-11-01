@@ -1,25 +1,15 @@
 package com.cd.book.response;
 
-import com.cd.book.dto.BookSearchDTO;
+import java.util.List;
 
-public class SearchedBookBSResponse {
-private BookSearchDTO readableBooks;
-private BookSearchDTO borrowableBooks;
+import com.cd.book.dto.BookInfo;
+
+public class SearchedBookBSResponse extends CommonBaseResponse{
+private List<BookInfo> readableBooks;
+private List<BookInfo> borrowableBooks;
 private int start;
 private int bookNumFound;
 
-public BookSearchDTO getReadableBooks() {
-	return readableBooks;
-}
-public void setReadableBooks(BookSearchDTO readableBooks) {
-	this.readableBooks = readableBooks;
-}
-public BookSearchDTO getBorrowableBooks() {
-	return borrowableBooks;
-}
-public void setBorrowableBooks(BookSearchDTO borrowableBooks) {
-	this.borrowableBooks = borrowableBooks;
-}
 public int getStart() {
 	return start;
 }
@@ -31,6 +21,18 @@ public int getBookNumFound() {
 }
 public void setBookNumFound(int bookNumFound) {
 	this.bookNumFound = bookNumFound;
+}
+public List<BookInfo> getReadableBooks() {
+	return readableBooks;
+}
+public void setReadableBooks(List<BookInfo> readableBooks) {
+	this.readableBooks = readableBooks;
+}
+public List<BookInfo> getBorrowableBooks() {
+	return borrowableBooks;
+}
+public void setBorrowableBooks(List<BookInfo> borrowableBooks) {
+	this.borrowableBooks = borrowableBooks;
 }
 
 }

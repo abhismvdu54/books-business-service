@@ -1,8 +1,10 @@
-package com.cd.book.entity;
+package com.cd.book.response;
 
 import java.util.List;
 
-public class GoodReadRatingSearchedEntity {
+import com.cd.book.entity.GoodReadRatingBookInfo;
+
+public class GoodReadRatingBook {
 
 	private List<GoodReadRatingBookInfo> books;
 

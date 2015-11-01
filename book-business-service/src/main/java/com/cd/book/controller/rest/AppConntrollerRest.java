@@ -21,8 +21,8 @@ public class AppConntrollerRest {
 	 @RequestMapping(value = "/home", method = RequestMethod.GET, headers = "Accept=application/json")
 	 public @ResponseBody User create() {
 		 User user1=new User();
-		 user1.setEmail("MayankKumar0078@gmail.com");
-		 user1.setPassword("mayank");
+		 //user1.setEmail("MayankKumar0078@gmail.com");
+		 //user1.setPassword("mayank");
 		 return user1;
 	 }
 }

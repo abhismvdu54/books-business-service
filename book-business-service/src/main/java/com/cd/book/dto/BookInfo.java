@@ -1,5 +1,7 @@
 package com.cd.book.dto;
 
+import java.util.List;
+
 public class BookInfo {
 	private String title;
 	private Boolean has_fulltext;
@@ -8,7 +10,11 @@ public class BookInfo {
 	private Integer edition_count;
 	private Integer first_publish_year;
 	
-	
+	private String ia[];
+	private String iaStr;
+	private String iaUrl;
+	private String id_goodreads[];
+	private String language[];
 	private String edition_key[];
 	private String author_name[];
 	private String isbn[];
@@ -17,10 +23,15 @@ public class BookInfo {
 	private String publisher[];
 	private String publish_date[];
 	private String publish_year[];
+	private String publish_place[];
+	private String lending_edition_s;
+	private String lending_identifier_s;
 	private String thumbnailUrl;
 	private String preview;
 	private String infoUrl;
 	private String previewUrl;
+	
+	private List<BookInfo> editions;
 	
 	private GoodReadReviewRating goodReadReviewRating;  
 	
@@ -137,5 +148,65 @@ public class BookInfo {
 	}
 	public void setGoodReadReviewRating(GoodReadReviewRating goodReadReviewRating) {
 		this.goodReadReviewRating = goodReadReviewRating;
+	}
+	@Override
+	public String toString(){
+		return "title:"+title+
+				"has_fulltext:"+has_fulltext+
+				"cover_i:"+cover_i;
+	}
+	public String[] getIa() {
+		return ia;
+	}
+	public void setIa(String[] ia) {
+		this.ia = ia;
+	}
+	public String[] getId_goodreads() {
+		return id_goodreads;
+	}
+	public void setId_goodreads(String[] id_goodreads) {
+		this.id_goodreads = id_goodreads;
+	}
+	public String[] getLanguage() {
+		return language;
+	}
+	public void setLanguage(String[] language) {
+		this.language = language;
+	}
+	public String[] getPublish_place() {
+		return publish_place;
+	}
+	public void setPublish_place(String[] publish_place) {
+		this.publish_place = publish_place;
+	}
+	public String getLending_edition_s() {
+		return lending_edition_s;
+	}
+	public void setLending_edition_s(String lending_edition_s) {
+		this.lending_edition_s = lending_edition_s;
+	}
+	public String getLending_identifier_s() {
+		return lending_identifier_s;
+	}
+	public void setLending_identifier_s(String lending_identifier_s) {
+		this.lending_identifier_s = lending_identifier_s;
+	}
+	public String getIaStr() {
+		return iaStr;
+	}
+	public void setIaStr(String iaStr) {
+		this.iaStr = iaStr;
+	}
+	public String getIaUrl() {
+		return iaUrl;
+	}
+	public void setIaUrl(String iaUrl) {
+		this.iaUrl = iaUrl;
+	}
+	public List<BookInfo> getEditions() {
+		return editions;
+	}
+	public void setEditions(List<BookInfo> editions) {
+		this.editions = editions;
 	}
 }
