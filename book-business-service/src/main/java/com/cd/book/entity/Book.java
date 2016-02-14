@@ -29,9 +29,6 @@ public class Book {
 	@OneToMany(mappedBy = "bookId")
     private Set<BookReview> bookReviews;
 
-	@OneToMany(mappedBy = "bookId")
-    private Set<BooksInBookShelf> booksInBookShelves;
-
 	@Column(name = "ISBN10", unique = true)
     private Integer isbn10;
 
@@ -79,14 +76,6 @@ public class Book {
 
 	public void setBookReviews(Set<BookReview> bookReviews) {
         this.bookReviews = bookReviews;
-    }
-
-	public Set<BooksInBookShelf> getBooksInBookShelves() {
-        return booksInBookShelves;
-    }
-
-	public void setBooksInBookShelves(Set<BooksInBookShelf> booksInBookShelves) {
-        this.booksInBookShelves = booksInBookShelves;
     }
 
 	public Integer getIsbn10() {
