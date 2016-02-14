@@ -1,5 +1,7 @@
 package com.cd.book.business.service.impl;
 
+import java.util.List;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -18,7 +20,7 @@ import com.google.gson.GsonBuilder;
 public class OpenLibraryServiceImpl implements OpenLibraryService{
 
 	RestTemplate restTemplate; 
-	
+
 	/** (non-Javadoc)
 	 * @see com.cd.book.business.service.OpenLibraryService#retrieveBooksInfo(java.lang.String, int)
 	 */
@@ -34,7 +36,7 @@ public class OpenLibraryServiceImpl implements OpenLibraryService{
 			GsonBuilder builder = new GsonBuilder();
 			Gson gson = builder.create();
 			bookSearchDTO = gson.fromJson(books, BookSearchDTO.class);
-			
+
 		} catch(HttpServerErrorException hse){
 
 			final String serverNotAvlExMsg = " Open library Server is down";
@@ -57,20 +59,51 @@ public class OpenLibraryServiceImpl implements OpenLibraryService{
 	 */
 	@Override
 	public JSONObject retrieveArchievedData(String archievedQuery) throws BookBusinessServiceException {
+		restTemplate = new RestTemplate();
 		String result = restTemplate.getForObject(archievedQuery, String.class);//(queryForReadableLink, String.class);
 		JSONParser parser = new JSONParser();
 		Object obj = new Object();
 		try {
 			obj = parser.parse(result);
 		} catch (ParseException e) {
-			
+
 			final String msg = "Exception while parsing the archieved data";
 			throw new BookBusinessServiceException(
 					0, HttpStatus.INTERNAL_SERVER_ERROR.value(),
 					HttpStatus.INTERNAL_SERVER_ERROR.value(), msg);
 		}
 		org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject)obj;
-		
+
+		return jsonObject;
+	}
+	@Override
+	public JSONObject getBookInfoByOlids(List<String> olids) throws BookBusinessServiceException {
+		restTemplate = new RestTemplate();
+		String url = "https://openlibrary.org/api/books?bibkeys=";
+		JSONParser parser = new JSONParser();
+		Object obj = new Object();
+		String result = null;
+		for(String olid : olids){
+			url+="OLID:"+olid+","; 
+		}
+		url += "&details=true&format=json";
+		try {
+			result = restTemplate.getForObject(url, String.class);
+			obj = parser.parse(result);
+			System.out.println("result.............  "+result);
+		} catch (ParseException e) {
+			String msg = "Unable to parse the json string into Json Object";
+			throw new BookBusinessServiceException(
+					0, HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					HttpStatus.INTERNAL_SERVER_ERROR.value(), msg);
+		}catch(Exception e){
+			String msg = "Unable to connect with the open library service";
+			throw new BookBusinessServiceException(
+					0, HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					HttpStatus.INTERNAL_SERVER_ERROR.value(), msg);
+		}
+		org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject)obj;
+
 		return jsonObject;
 	}
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cd.book.business.domain.request.BookSearchCriteriaRequest;
 import com.cd.book.business.service.BookSearchService;
@@ -25,7 +26,7 @@ import com.cd.book.response.transformer.BookBusinessServiceExceptionTransformer;
 @EnableAutoConfiguration
 @ComponentScan
 @Transactional
-@RequestMapping(value="api/books/search")
+//@RequestMapping(value="/api")
 public class BooksSearchController {
 
 	@Resource
@@ -41,11 +42,11 @@ public class BooksSearchController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/books/{pageNo}", method = RequestMethod.POST, produces = {"application/json", "application/xml"})
+	@RequestMapping(value = "/search/books/{pageNo}", method = RequestMethod.POST, produces = {"application/json", "application/xml"})
 	public  SearchedBookBSResponse searchBooks(@RequestBody BookSearchCriteriaRequest bookSearchCriteria, 
 			@PathVariable ("pageNo") String pageNo){
 		
-		SearchedBookBSResponse response = null;;
+		SearchedBookBSResponse response = null;
 		try {
 		response = bookSearchService.searchBooks(bookSearchCriteria, pageNo);
 		} catch (BookBusinessServiceException e) {
@@ -62,7 +63,7 @@ public class BooksSearchController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/books/bySubject/{subject}/{pageNo}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
+	@RequestMapping(value = "/books/search/bySubject/{subject}/{pageNo}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
 	public  SearchedBookBSResponse searchBooksByWildCard(@PathVariable ("subject") String subject,
 			@PathVariable ("pageNo") String pageNo){
 		SearchedBookBSResponse response = null;
@@ -73,5 +74,14 @@ public class BooksSearchController {
 		}
 		
 		return response;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/test", method = RequestMethod.POST, produces = {"application/json", "application/xml"})
+	public  SearchedBookBSResponse test(MultipartFile file){
+		
+		SearchedBookBSResponse res = null;
+		
+		return res;
 	}
 }

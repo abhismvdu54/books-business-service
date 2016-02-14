@@ -7,9 +7,6 @@ public class BookShelfUpdateRequest{
 	@NotNull(message ="Book shelf id can't be null")
 	private Integer bookShelfId;
 
-	@NotNull(message = "User id can't be null")
-	private Integer userId;
-
 	@NotNull(message = "BookShelf name can't be null")
 	private String bookShelfName;
 	
@@ -22,12 +19,6 @@ public class BookShelfUpdateRequest{
 
 	public void setBookShelfId(Integer bookShelfId) {
 		this.bookShelfId = bookShelfId;
-	}
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
 	}
 	public String getBookShelfName() {
 		return bookShelfName;

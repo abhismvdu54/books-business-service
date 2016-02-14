@@ -11,21 +11,12 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class BookShelfCreateRequest {
 	
-@NotNull(message = "User id can't be null")
-private int userId;
-
 @NotNull(message = "BookShelf name can't be null")
 private String bookShelfName;
 
 @NotNull(message = "User email can't be null")
 private String userEmail;
 
-public int getUserId() {
-	return userId;
-}
-public void setUserId(int userId) {
-	this.userId = userId;
-}
 public String getBookShelfName() {
 	return bookShelfName;
 }

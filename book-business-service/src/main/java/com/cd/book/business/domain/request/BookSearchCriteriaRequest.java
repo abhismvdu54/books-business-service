@@ -8,6 +8,8 @@ public class BookSearchCriteriaRequest {
 	private int publishYearStartLimit;
 	private int publishYearendLimit;
 	private String publisher;
+	private String place;
+	private String isbn;
 	
 	public String getSubject() {
 		return subject;
@@ -44,5 +46,17 @@ public class BookSearchCriteriaRequest {
 	}
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
+	}
+	public String getPlace() {
+		return place;
+	}
+	public void setPlace(String place) {
+		this.place = place;
+	}
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 }

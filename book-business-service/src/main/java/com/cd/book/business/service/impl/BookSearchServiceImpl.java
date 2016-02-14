@@ -97,8 +97,11 @@ public class BookSearchServiceImpl implements BookSearchService{
 		if(!StringUtils.isEmpty(bookSearchCriteria.getPublisher())){
 			searchUrl += "publisher="+bookSearchCriteria.getPublisher()+"&";
 		}
-		if(!StringUtils.isEmpty(bookSearchCriteria.getPublisher())){
-			searchUrl += "publisher="+bookSearchCriteria.getPublisher()+"&";
+		if(!StringUtils.isEmpty(bookSearchCriteria.getPlace())){
+			searchUrl += "place="+bookSearchCriteria.getPlace()+"&";
+		}
+		if(!StringUtils.isEmpty(bookSearchCriteria.getIsbn())){
+			searchUrl += "isbn="+bookSearchCriteria.getIsbn()+"&";
 		}
 		searchUrl += "&has_fulltext=true&page="+pageNo;
 		//do the changes for publish year
@@ -107,6 +110,7 @@ public class BookSearchServiceImpl implements BookSearchService{
 	}
 
 	@Override
+	@Cacheable(value="booksBySubject")
 	public SearchedBookBSResponse searchBooksBySubject(String subject, String pageNo)
 			throws BookBusinessServiceException {
 		String searchUrl = "http://openlibrary.org/search.json?q="+subject+"&page="+pageNo+"&has_fulltext=true";
