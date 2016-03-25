@@ -20,12 +20,16 @@ public class BookSearchTransformer {
 	 //loop through books and find out the different conditions to divide into borrowable and readable
 	 List<BookInfo> readableBooks = new ArrayList<BookInfo>();
 	 List<BookInfo> borrowableBooks = new ArrayList<BookInfo>();
-	 int readcount = 0 ;
+	// int readcount = 0 ;
 	 for(BookInfo bookInfo : books.getDocs()){
 		 
 		 //check for the condition for the readable books
-		 if(bookInfo.getEbook_count_i() > 0 && bookInfo.getIa().length > 0 && bookInfo.getLending_identifier_s() == null){
-			 readcount++;
+		 if(bookInfo.getEbook_count_i() > 0 && bookInfo.getIa().length > 0 && bookInfo.getLending_identifier_s() == null && bookInfo.isPublic_scan_b()){
+			 //readcount++;
+			 if(bookInfo.getPreview()!=null){
+				 System.out.println("the preview is : "+ bookInfo.getPreview());
+			 }
+			 //System.out.println("the preview is : "+ bookInfo.getPreview());
 			 //loop through the no of ebook counts add it to the readable links
 			 BookInfo readableBookInfo = bookInfo;
 			 List<BookInfo> editionBooksList = new ArrayList<BookInfo>();
@@ -40,7 +44,7 @@ public class BookSearchTransformer {
 				//edition books for the title  with readable links
 				
 				 if(i > 0){
-					 System.out.println("the value of the read count is "+readcount);
+					//System.out.println("the value of the read count is "+readcount);
 					 //if there are more books with internet archieve links (more editions) then add it as editions with the latest one
 					 BookInfo editionBookInfo = new BookInfo();
 					 editionBookInfo.setIaStr(bookInfo.getIa()[i]);

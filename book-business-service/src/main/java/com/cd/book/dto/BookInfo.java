@@ -30,6 +30,10 @@ public class BookInfo {
 	private String preview;
 	private String infoUrl;
 	private String previewUrl;
+	private boolean public_scan_b;
+	private String ia_collection_s;
+	private double bookRating;
+	private double noOfRatings;
 	
 	private List<BookInfo> editions;
 	
@@ -208,5 +212,29 @@ public class BookInfo {
 	}
 	public void setEditions(List<BookInfo> editions) {
 		this.editions = editions;
+	}
+	public boolean isPublic_scan_b() {
+		return public_scan_b;
+	}
+	public void setPublic_scan_b(boolean public_scan_b) {
+		this.public_scan_b = public_scan_b;
+	}
+	public String getIa_collection_s() {
+		return ia_collection_s;
+	}
+	public void setIa_collection_s(String ia_collection_s) {
+		this.ia_collection_s = ia_collection_s;
+	}
+	public double getBookRating() {
+		return bookRating;
+	}
+	public void setBookRating(double bookRating) {
+		this.bookRating = bookRating;
+	}
+	public double getNoOfRatings() {
+		return noOfRatings;
+	}
+	public void setNoOfRatings(double noOfRatings) {
+		this.noOfRatings = noOfRatings;
 	}
 }

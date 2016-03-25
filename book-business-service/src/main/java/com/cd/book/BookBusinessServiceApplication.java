@@ -17,7 +17,7 @@ import org.springframework.core.io.ClassPathResource;
 @Configuration
 @EnableAutoConfiguration
 @EnableCaching
-@ComponentScan
+@ComponentScan("com.cd")
 public class BookBusinessServiceApplication {
 
 

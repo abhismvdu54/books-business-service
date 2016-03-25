@@ -1,7 +1,7 @@
 package com.cd.book.exception;
 /**
  * @author pandea9
- * This is a base exception claas which needs to be extended by each of the excepton classes
+ * This is a base exception class which needs to be extended by each of the sub exception classes
  */
 public class BaseBusinessServiceException extends Exception{
 	private static final long serialVersionUID = 1L;
