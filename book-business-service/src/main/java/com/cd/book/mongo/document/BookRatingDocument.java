@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.cd.book.mongo.domain.UserRating;
+
 @Document(collection="book_rating")
 public class BookRatingDocument {
 

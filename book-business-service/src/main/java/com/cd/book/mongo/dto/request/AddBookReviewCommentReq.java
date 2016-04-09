@@ -2,7 +2,7 @@ package com.cd.book.mongo.dto.request;
 
 import javax.validation.constraints.NotNull;
 
-import com.cd.book.mongo.document.UserComment;
+import com.cd.book.mongo.domain.UserComment;
 
 public class AddBookReviewCommentReq {
 

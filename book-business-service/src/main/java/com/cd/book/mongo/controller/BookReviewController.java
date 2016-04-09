@@ -2,6 +2,7 @@ package com.cd.book.mongo.controller;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import com.cd.book.mongo.dto.request.AddBookReviewCommentReq;
 import com.cd.book.mongo.dto.request.UpdateBookReviewCommentReq;
 import com.cd.book.mongo.exception.BookReviewServiceException;
 import com.cd.book.mongo.response.BookReviewResponse;
+import com.cd.book.mongo.response.transformer.BookReviewResponseTransformer;
 import com.cd.book.mongo.service.BookReviewService;
 
 
@@ -25,6 +27,9 @@ public class BookReviewController {
 
 	@Resource
 	BookReviewService bookReviewService;
+	
+	@Autowired
+	private BookReviewResponseTransformer bookReviewResponseTransformer;
 	
 	/**
 	 * Retrieve the book review based on the book id provided
@@ -38,11 +43,9 @@ public class BookReviewController {
 			 response = bookReviewService.retrieveBookReview(bookId);
 			 
 		} catch (BookReviewServiceException e) {
-			response.setApplicationCode(e.getApplicationCode());
-			response.setCode(e.getCode());
-			response.setDeveloperMessage(e.getLocalizedMessage());
+			return (BookReviewResponse) bookReviewResponseTransformer.buildExceptionResponse(e, response);
 		}
-		return response;
+		return bookReviewResponseTransformer.transformIntoSuccessResponse(response);
 	}
 	
 	/**
@@ -58,11 +61,9 @@ public class BookReviewController {
 			 response = bookReviewService.insertBookReview(bookReviewDocument);
 			 
 		} catch (BookReviewServiceException e) {
-			response.setApplicationCode(e.getApplicationCode());
-			response.setCode(e.getCode());
-			response.setDeveloperMessage(e.getLocalizedMessage());
+			return (BookReviewResponse) bookReviewResponseTransformer.buildExceptionResponse(e, response);
 		}
-		return response;
+		return bookReviewResponseTransformer.transformIntoSuccessResponse(response);
 	}
 	
 	/**
@@ -77,11 +78,9 @@ public class BookReviewController {
 			 response = bookReviewService.updateBookReview(bookReviewDoc);
 			 
 		} catch (BookReviewServiceException e) {
-			response.setApplicationCode(e.getApplicationCode());
-			response.setCode(e.getCode());
-			response.setDeveloperMessage(e.getLocalizedMessage());
+			return (BookReviewResponse) bookReviewResponseTransformer.buildExceptionResponse(e, response);
 		}
-		return response;
+		return bookReviewResponseTransformer.transformIntoSuccessResponse(response);
 	}
 	
 	//this method is adding the comment in the book review
@@ -93,11 +92,9 @@ public class BookReviewController {
 			 response = bookReviewService.addBookReviewComment(bookReviewCommentReq);
 			 
 		} catch (BookReviewServiceException e) {
-			response.setApplicationCode(e.getApplicationCode());
-			response.setCode(e.getCode());
-			response.setDeveloperMessage(e.getLocalizedMessage());
+			return (BookReviewResponse) bookReviewResponseTransformer.buildExceptionResponse(e, response);
 		}
-		return response;
+		return bookReviewResponseTransformer.transformIntoSuccessResponse(response);
 	}
 	
 	//this method is  updating the comment in the book review
@@ -109,11 +106,9 @@ public class BookReviewController {
 			 response = bookReviewService.updateBookReviewComment(bookReviewCommentReq);
 			 
 		} catch (BookReviewServiceException e) {
-			response.setApplicationCode(e.getApplicationCode());
-			response.setCode(e.getCode());
-			response.setDeveloperMessage(e.getLocalizedMessage());
+			return (BookReviewResponse) bookReviewResponseTransformer.buildExceptionResponse(e, response);
 		}
-		return response;
+		return bookReviewResponseTransformer.transformIntoSuccessResponse(response);
 	}
 	
 }

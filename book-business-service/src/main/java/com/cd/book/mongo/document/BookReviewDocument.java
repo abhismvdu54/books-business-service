@@ -8,6 +8,9 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.cd.book.mongo.domain.User;
+import com.cd.book.mongo.domain.UserComment;
+
 @Document(collection="book_review")
 public class BookReviewDocument {
 

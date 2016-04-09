@@ -2,7 +2,7 @@ package com.cd.book.mongo.dto.request;
 
 import java.util.List;
 
-import com.cd.book.mongo.document.UserComment;
+import com.cd.book.mongo.domain.UserComment;
 
 //this request class is for updating the book review comments
 public class UpdateBookReviewCommentReq {

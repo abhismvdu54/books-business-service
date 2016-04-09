@@ -1,4 +1,4 @@
-package com.cd.book.mongo.document;
+package com.cd.book.mongo.domain;
 
 import java.util.Calendar;
 import java.util.List;

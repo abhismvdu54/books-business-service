@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.cd.book.mongo.document.BookRatingDocument;
 import com.cd.book.mongo.document.BookReviewDocument;
-import com.cd.book.response.CommonBaseResponse;
+import com.cd.book.response.BaseResponse;
 
-public class BookReviewResponse extends CommonBaseResponse{
+public class BookReviewResponse extends BaseResponse{
 	//This is for the purpose of inserting the book review document
 private BookReviewDocument bookReviewDocument;
 //This is for the purpose of retrieving the book review documents for a book

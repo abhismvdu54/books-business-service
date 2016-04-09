@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import com.cd.book.mongo.domain.BookAvgRating;
 import com.cd.book.mongo.exception.BookRatingServiceException;
 import com.cd.book.mongo.response.BookAvgRatingResponse;
 import com.cd.book.mongo.response.BookRatingResponse;
+import com.cd.book.mongo.response.transformer.BookRatingResponseTransformer;
 import com.cd.book.mongo.service.BookRatingService;
 
 @RestController
@@ -26,6 +28,9 @@ public class BookRatingController {
 
 	@Resource
 	private BookRatingService bookRatingService;
+	
+	@Autowired
+	private BookRatingResponseTransformer bookRatingResponseTransformer;
 	/**
 	 * Retrieve the book rating based on the book id provided
 	 * @param bookId
@@ -38,11 +43,9 @@ public class BookRatingController {
 			 response = bookRatingService.retrieveBookRating(bookId);
 			 
 		} catch (BookRatingServiceException e) {
-			response.setApplicationCode(e.getApplicationCode());
-			response.setCode(e.getCode());
-			response.setDeveloperMessage(e.getLocalizedMessage());
+			return (BookRatingResponse)bookRatingResponseTransformer.buildExceptionResponse(e, response);
 		}
-		return response;
+		return bookRatingResponseTransformer.transformIntoSuccessResponse(response);
 	}
 	/**
 	 * Retrieve the book ratings for a list of book ids.
@@ -59,11 +62,9 @@ public class BookRatingController {
 			response.setBookAvgRating(listOfAvgBookRating);
 			 
 		} catch (BookRatingServiceException e) {
-			response.setApplicationCode(e.getApplicationCode());
-			response.setCode(e.getCode());
-			response.setDeveloperMessage(e.getLocalizedMessage());
+			return (BookAvgRatingResponse)bookRatingResponseTransformer.buildExceptionResponse(e, response);
 		}
-		return response;
+		return bookRatingResponseTransformer.transformAvgRatingIntoSuccessResponse(response);
 	}
 	
 	/**
@@ -78,11 +79,9 @@ public class BookRatingController {
 			 response = bookRatingService.updateBookRating(bookRatingDoc);
 			 
 		} catch (BookRatingServiceException e) {
-			response.setApplicationCode(e.getApplicationCode());
-			response.setCode(e.getCode());
-			response.setDeveloperMessage(e.getLocalizedMessage());
+			return (BookRatingResponse)bookRatingResponseTransformer.buildExceptionResponse(e, response);
 		}
-		return response;
+		return bookRatingResponseTransformer.transformIntoSuccessResponse(response);
 	}
 	
 	@ResponseBody
@@ -93,10 +92,8 @@ public class BookRatingController {
 			 response = bookRatingService.insertBookRatings(bookRatingDocs);
 			 
 		} catch (BookRatingServiceException e) {
-			response.setApplicationCode(e.getApplicationCode());
-			response.setCode(e.getCode());
-			response.setDeveloperMessage(e.getLocalizedMessage());
+			return (BookRatingResponse)bookRatingResponseTransformer.buildExceptionResponse(e, response);
 		}
-		return response;
+		return bookRatingResponseTransformer.transformIntoSuccessResponse(response);
 	}
 }

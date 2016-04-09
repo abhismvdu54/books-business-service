@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.cd.book.dto.BookInfo;
 
-public class BooksInfoResponse extends CommonBaseResponse{
+public class BooksInfoResponse extends BaseResponse{
 
 	private List<BookInfo> listOfBooks;
 

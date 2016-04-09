@@ -3,9 +3,9 @@ package com.cd.book.mongo.response;
 import java.util.List;
 
 import com.cd.book.mongo.domain.BookAvgRating;
-import com.cd.book.response.CommonBaseResponse;
+import com.cd.book.response.BaseResponse;
 
-public class BookAvgRatingResponse  extends CommonBaseResponse{
+public class BookAvgRatingResponse  extends BaseResponse{
 	
 List<BookAvgRating> bookAvgRating;
 

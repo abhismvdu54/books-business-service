@@ -1,31 +1,26 @@
 package com.cd.book.mongo.service.impl;
 
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Sort;
 
+import com.cd.book.constant.BookCommonConstant;
 import com.cd.book.mongo.document.BookRatingDocument;
 import com.cd.book.mongo.domain.BookAvgRating;
 import com.cd.book.mongo.exception.BookRatingServiceException;
 import com.cd.book.mongo.repository.BookRatingRepository;
 import com.cd.book.mongo.response.BookRatingResponse;
 import com.cd.book.mongo.service.BookRatingService;
-
-import org.springframework.data.mongodb.core.query.Criteria;
-
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
-
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
 
 @Service
 public class BookRatingServiceImpl implements BookRatingService{
@@ -48,7 +43,8 @@ public class BookRatingServiceImpl implements BookRatingService{
 			response.setOverAllBookRating(overAllBookRating);
 		} catch (Exception e) {
 			String msg = "Exception while getting book rating";
-			throw new BookRatingServiceException(1,1,1,msg, e);
+			throw new BookRatingServiceException(BookCommonConstant.APPLICATION_CODE,HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					HttpStatus.INTERNAL_SERVER_ERROR.value(),msg, e);
 		}
 		return response;
 	}
@@ -69,7 +65,8 @@ public class BookRatingServiceImpl implements BookRatingService{
 			response.setBookRatingDocument(bookRatingDoc);;
 		} catch (Exception e) {
 			String msg = "Exception while inserting book rating";
-			throw new BookRatingServiceException(1,1,1,msg, e);
+			throw new BookRatingServiceException(BookCommonConstant.APPLICATION_CODE,HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					HttpStatus.INTERNAL_SERVER_ERROR.value(),msg, e);
 		}
 		return response;
 	}
@@ -92,36 +89,28 @@ public class BookRatingServiceImpl implements BookRatingService{
 			}
 		} catch (Exception e) {
 			String msg = "Exception while updating book rating";
-			throw new BookRatingServiceException(1,1,1,msg, e);
+			throw new BookRatingServiceException(BookCommonConstant.APPLICATION_CODE,HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					HttpStatus.INTERNAL_SERVER_ERROR.value(),msg, e);
 		}
 		return response;
 	}
 
 	@Override
 	public List<BookAvgRating> retrieveBookRatings(List<String> bookIds) throws BookRatingServiceException {
-
-		/*try {
-			List<BookRatingDocument> bookRatingDoc = bookRatingRepository.findByBookIds(bookIds);
-			System.out.println("The list is: "+bookRatingDoc);
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}*/
 		List<BookAvgRating> listOfObject = null;
 		try {
 
 			Aggregation agg = newAggregation(
 					match(Criteria.where("bookId").in(bookIds)),
-					group("bookId").avg("userRating.rating").as("avgRating").sum("userRating.rating").as("sumOfRatings")
-
-
-					);
+					group("bookId").avg("userRating.rating").as("avgRating").sum("userRating.rating").as("sumOfRatings"));
 
 			AggregationResults<BookAvgRating> groupResult = mongoTemplate.aggregate(agg, BookRatingDocument.class, BookAvgRating.class);
 			listOfObject = groupResult.getMappedResults();
 
 		} catch (Exception e) {
-			throw  new BookRatingServiceException(0,0,0,"Error while getting book rating ", e);
+			String msg = "Can't retrieve book ratings";
+			throw new BookRatingServiceException(BookCommonConstant.APPLICATION_CODE,HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					HttpStatus.INTERNAL_SERVER_ERROR.value(),msg, e);
 		}
 
 		return listOfObject;
@@ -135,7 +124,9 @@ public class BookRatingServiceImpl implements BookRatingService{
 			List<BookRatingDocument> bookRatingDocumentResponse = bookRatingRepository.save(bookRatingDocs);
 			response.setBookRatingDocumentList(bookRatingDocumentResponse);
 		} catch (Exception e) {
-			throw  new BookRatingServiceException(0,0,0,"Error while inserting book ratings ", e);
+			String msg = "Can't insert book rating)";
+			throw new BookRatingServiceException(BookCommonConstant.APPLICATION_CODE,HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					HttpStatus.INTERNAL_SERVER_ERROR.value(),msg, e);
 		}
 		return null;
 	}

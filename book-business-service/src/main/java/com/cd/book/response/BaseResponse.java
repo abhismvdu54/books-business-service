@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @XmlRootElement(name = "commonBaseResponse")
 @JsonInclude(Include.NON_NULL)
-public class CommonBaseResponse {
+public class BaseResponse {
 
 	 private int applicationCode;
 

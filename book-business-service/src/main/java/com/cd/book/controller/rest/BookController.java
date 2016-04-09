@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cd.book.business.domain.request.BookRequest;
+import com.cd.book.business.domain.response.transformer.BookResponseTransformer;
 import com.cd.book.business.service.BookService;
 import com.cd.book.exception.BookBusinessServiceException;
 import com.cd.book.response.BooksInfoResponse;
-import com.cd.book.response.transformer.BookBusinessServiceExceptionTransformer;
 
 @RestController
 @EnableAutoConfiguration
@@ -24,7 +24,7 @@ import com.cd.book.response.transformer.BookBusinessServiceExceptionTransformer;
 public class BookController {
 
 	@Resource
-	BookBusinessServiceExceptionTransformer exceptionTransformer;
+	BookResponseTransformer bookResponseTransformer;
 	
 	@Resource
 	BookService bookService;
@@ -36,8 +36,8 @@ public class BookController {
 		try {
 			response = bookService.getBookInfoByOlids(olids);
 		} catch (BookBusinessServiceException e) {
-			exceptionTransformer.buildServiceExceptionResponse(response, e);
+			return (BooksInfoResponse) bookResponseTransformer.buildExceptionResponse(e, response);
 		}
-		return response;
+		return (BooksInfoResponse) bookResponseTransformer.transformIntoSuccessResponse(response);
 	}
 }

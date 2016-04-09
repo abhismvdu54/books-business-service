@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.cd.book.dto.BookInfo;
 
-public class SearchedBookBSResponse extends CommonBaseResponse{
+public class SearchedBookBSResponse extends BaseResponse{
 private List<BookInfo> readableBooks;
 private List<BookInfo> borrowableBooks;
 private int start;

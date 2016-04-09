@@ -14,26 +14,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.cd.book.business.domain.request.BookSearchCriteriaRequest;
+import com.cd.book.business.domain.response.transformer.BookResponseTransformer;
 import com.cd.book.business.service.BookSearchService;
 import com.cd.book.exception.BookBusinessServiceException;
 import com.cd.book.response.SearchedBookBSResponse;
-import com.cd.book.response.transformer.BookBusinessServiceExceptionTransformer;
 
 @RestController
 @EnableAutoConfiguration
 @ComponentScan
 @Transactional
-//@RequestMapping(value="/api")
 public class BooksSearchController {
 
 	@Resource
 	BookSearchService bookSearchService;
 
 	@Resource
-	BookBusinessServiceExceptionTransformer exceptionTransformer;
+	BookResponseTransformer bookResponseTransformer;
 	
 	/**
 	 * This rest api is for searching the books based on the advanced search options
@@ -50,10 +48,10 @@ public class BooksSearchController {
 		try {
 		response = bookSearchService.searchBooks(bookSearchCriteria, pageNo);
 		} catch (BookBusinessServiceException e) {
-			exceptionTransformer.buildServiceExceptionResponse(response, e);
+			return (SearchedBookBSResponse) bookResponseTransformer.buildExceptionResponse(e, response);
 		}
 		
-		return response;
+		return (SearchedBookBSResponse) bookResponseTransformer.transformIntoSuccessResponse(response);
 	}
 	
 	/**
@@ -70,18 +68,9 @@ public class BooksSearchController {
 		try {
 		response = bookSearchService.searchBooksBySubject(subject, pageNo);
 		} catch (BookBusinessServiceException e) {
-			exceptionTransformer.buildServiceExceptionResponse(response, e);
+			return (SearchedBookBSResponse) bookResponseTransformer.buildExceptionResponse(e, response);
 		}
 		
-		return response;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/test", method = RequestMethod.POST, produces = {"application/json", "application/xml"})
-	public  SearchedBookBSResponse test(MultipartFile file){
-		
-		SearchedBookBSResponse res = null;
-		
-		return res;
+		return (SearchedBookBSResponse) bookResponseTransformer.transformIntoSuccessResponse(response);
 	}
 }

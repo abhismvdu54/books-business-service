@@ -8,11 +8,13 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.cd.book.constant.BookCommonConstant;
 import com.cd.book.mongo.document.BookRatingDocument;
 import com.cd.book.mongo.document.BookReviewDocument;
-import com.cd.book.mongo.document.UserComment;
+import com.cd.book.mongo.domain.UserComment;
 import com.cd.book.mongo.dto.request.AddBookReviewCommentReq;
 import com.cd.book.mongo.dto.request.UpdateBookReviewCommentReq;
 import com.cd.book.mongo.exception.BookReviewServiceException;
@@ -52,8 +54,9 @@ public class BookReviewServiceImpl implements BookReviewService {
 			response.setTotalRatings(bookRatingResponse.getBookRatingDocumentList().size());
 			response.setBookRatingDocumentList(bookRatingResponse.getBookRatingDocumentList());
 		} catch (Exception e) {
-			String msg = "Exception while getting book review";
-			throw new BookReviewServiceException(1,1,1,msg, e);
+			String msg = "Can't get book review";
+			throw new BookReviewServiceException(BookCommonConstant.APPLICATION_CODE,HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					HttpStatus.INTERNAL_SERVER_ERROR.value(),msg, e);
 		}
 		return response;
 	}
@@ -89,7 +92,8 @@ public class BookReviewServiceImpl implements BookReviewService {
 			response.setBookReviewDocument(bookReviewDoc);
 		} catch (Exception e) {
 			String msg = "Exception while inserting new book review";
-			throw new BookReviewServiceException(1,1,1,msg, e);
+			throw new BookReviewServiceException(BookCommonConstant.APPLICATION_CODE,HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					HttpStatus.INTERNAL_SERVER_ERROR.value(),msg, e);
 		}
 		
 		return response;
@@ -116,7 +120,8 @@ public class BookReviewServiceImpl implements BookReviewService {
 			response.setBookReviewDocument(bookReviewDocFromDB);
 		} catch (Exception e) {
 			String msg = "Exception while inserting new book review";
-			throw new BookReviewServiceException(1,1,1,msg, e);
+			throw new BookReviewServiceException(BookCommonConstant.APPLICATION_CODE,HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					HttpStatus.INTERNAL_SERVER_ERROR.value(),msg, e);
 		}
 		return response;
 	}
@@ -143,7 +148,9 @@ public class BookReviewServiceImpl implements BookReviewService {
 				response.setBookReviewDocument(bookReviewDocFromDB);
 			}
 		} catch (Exception e) {
-			throw new BookReviewServiceException(1,1,1,"Can't add new user comment", e);
+			String msg = "Can't add user comment";
+			throw new BookReviewServiceException(BookCommonConstant.APPLICATION_CODE,HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					HttpStatus.INTERNAL_SERVER_ERROR.value(),msg, e);
 		}
 		return response;
 	}
@@ -177,7 +184,9 @@ public class BookReviewServiceImpl implements BookReviewService {
 			response.setBookReviewDocument(bookReviewDocFromDB);
 			
 		} catch (Exception e) {
-			throw new BookReviewServiceException(1,1,1,"Can't update the user comment", e);
+			String msg = "Can't update user comment";
+			throw new BookReviewServiceException(BookCommonConstant.APPLICATION_CODE,HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					HttpStatus.INTERNAL_SERVER_ERROR.value(),msg, e);
 		}
 		return response;
 	}
